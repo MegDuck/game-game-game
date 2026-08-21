@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://be8qbmt0fe144"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i1day"]
+height = 1.5
+
+[sub_resource type="Environment" id="Environment_i1day"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=828029743]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1397994838]
+shape = SubResource("CapsuleShape3D_i1day")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1325476281]
+environment = SubResource("Environment_i1day")
+current = true
