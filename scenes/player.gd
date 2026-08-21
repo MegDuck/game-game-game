@@ -27,9 +27,9 @@ var t_bob = 0.0
 const BASE_FOV = 75.0
 const FOV_CHANGE = 1.5
 
-@export var bob_frequency := 2.0  # How fast the bobbing is
-@export var bob_amplitude := 0.08 # How high/low the camera bobs
-@export var sway_amplitude := 0.05 # How much the camera sways left/right
+@export var bob_frequency := 1  # How fast the bobbing is
+@export var bob_amplitude := 0.06 # How high/low the camera bobs
+@export var sway_amplitude := 0.1 # How much the camera sways left/right
 
 # We need to store the camera's default position so we can return to it
 var base_camera_pos : Vector3
@@ -47,6 +47,9 @@ func _input (event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
 
+
+
+
 func _process(delta):
 	# --- YOUR EXISTING MOUSE LOOK CODE ---
 	camera.rotation.x -= deg_to_rad(mouseDelta.y * lookSensitivity)
@@ -55,17 +58,20 @@ func _process(delta):
 	mouseDelta = Vector2()
 	
 	# --- CAMERA BOBBING LOGIC ---
-	# 1. Check if the player is moving on the ground
-	# (Assuming 'velocity' is your CharacterBody3D's velocity)
 	var is_moving = velocity.length() > 1.0 and is_on_floor()
 	
 	if is_moving:
 		# Increase the bob timer
 		bob_time += delta * bob_frequency
 		
-		# Calculate vertical (Up/Down) and horizontal (Left/Right) offsets
-		var bob_offset_y = sin(bob_time * TAU) * bob_amplitude
-		var bob_offset_x = cos(bob_time * TAU * 0.5) * sway_amplitude
+		# Calculate horizontal (Left/Right). 
+		# sin() goes from 0 -> 1 -> 0 -> -1 -> 0. Good for side-to-side.
+		var bob_offset_x = sin(bob_time * TAU) * sway_amplitude
+		
+		# Calculate vertical (Down/Up).
+		# -abs(cos()) forces the camera to ONLY go down, returning to 0 at the far left/right.
+		# When the camera is in the middle (X=0), it is at its lowest point.
+		var bob_offset_y = -abs(cos(bob_time * TAU)) * bob_amplitude
 		
 		# Apply the offsets to the camera's local position
 		camera.position = Vector3(
