@@ -12,34 +12,71 @@ var gravity : float = 12.0
 # cam look
 var minLookAngle : float = -90.0
 var maxLookAngle : float = 90.0
-var lookSensitivity : float = 20
+var lookSensitivity : float = 0.5
 # vectors
 var mouseDelta : Vector2 = Vector2()
 # player components
 @onready var camera = get_node("Camera")
 
+#Headbobbing Controls
+const BOB_FREQ = 2.0
+const BOB_AMP = 0.08
+var t_bob = 0.0
+
+#FOV Controls
+const BASE_FOV = 75.0
+const FOV_CHANGE = 1.5
+
+@export var bob_frequency := 2.0  # How fast the bobbing is
+@export var bob_amplitude := 0.08 # How high/low the camera bobs
+@export var sway_amplitude := 0.05 # How much the camera sways left/right
+
+# We need to store the camera's default position so we can return to it
+var base_camera_pos : Vector3
+var bob_time := 0.0
+
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	camera.position = Vector3.ZERO 
+	base_camera_pos = camera.position
 
 func _input (event):
 	# did the mouse move?
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
 
-# called every frame
 func _process(delta):
-	# Convert mouse input (pixels) * sensitivity into degrees, then into radians for Godot 4
-	camera.rotation.x -= deg_to_rad(mouseDelta.y * lookSensitivity * delta)
-	
-	# Clamp the camera's pitch. 
-	# Assuming minLookAngle and maxLookAngle are in degrees (e.g., -85 and 85),
-	# we convert them to radians so they clamp the radian property correctly.
+	# --- YOUR EXISTING MOUSE LOOK CODE ---
+	camera.rotation.x -= deg_to_rad(mouseDelta.y * lookSensitivity)
 	camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(minLookAngle), deg_to_rad(maxLookAngle))
-	
-	# Rotate the parent node (usually the player body) along the Y axis (Yaw)
-	rotation.y -= deg_to_rad(mouseDelta.x * lookSensitivity * delta)
-	
+	rotation.y -= deg_to_rad(mouseDelta.x * lookSensitivity)
 	mouseDelta = Vector2()
+	
+	# --- CAMERA BOBBING LOGIC ---
+	# 1. Check if the player is moving on the ground
+	# (Assuming 'velocity' is your CharacterBody3D's velocity)
+	var is_moving = velocity.length() > 1.0 and is_on_floor()
+	
+	if is_moving:
+		# Increase the bob timer
+		bob_time += delta * bob_frequency
+		
+		# Calculate vertical (Up/Down) and horizontal (Left/Right) offsets
+		var bob_offset_y = sin(bob_time * TAU) * bob_amplitude
+		var bob_offset_x = cos(bob_time * TAU * 0.5) * sway_amplitude
+		
+		# Apply the offsets to the camera's local position
+		camera.position = Vector3(
+			base_camera_pos.x + bob_offset_x,
+			base_camera_pos.y + bob_offset_y,
+			base_camera_pos.z
+		)
+	else:
+		# If not moving, smoothly reset camera back to center
+		bob_time = 0.0
+		camera.position = camera.position.lerp(base_camera_pos, delta * 10.0)
 
 # called every physics step
 func _physics_process (delta):
