@@ -15,6 +15,8 @@ func _process(delta: float) -> void:
 	pass
 
 func onAddText(text: String) -> void:
+	print('onAddText')
+	print(text)
 	$Book.add_text(text)
 	$Book.add_text('\n')
 

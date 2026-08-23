@@ -2,6 +2,7 @@ extends Node
 
 # выбранные улики
 var ChosenClues: Array[String] = []
+var ClickedClues: Array[String] = []
 
 # Limit per scene
 @export var max_clues_per_scene: int = 5
@@ -20,7 +21,7 @@ signal _no_clues()
 # --- METHODS ---
 # вызывается когда игрок кликает на предмет.
 func clicked(clue_id: String) -> void:
-	print('hello')
+	print(clue_id)
 	if remaining_clues <= 0:
 		
 		return
@@ -36,7 +37,7 @@ func clicked(clue_id: String) -> void:
 	remaining_clues -= 1
 	if remaining_clues == 0:
 		_no_clues.emit()
-	print("Clue clicked: ", clue_id, " | Remaining: ", remaining_clues)
+	#print("Clue clicked: ", clue_id, " | Remaining: ", remaining_clues)
 
 
 
