@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://b58dfl4xtb0u" path="res://scenes/main_scene.gd" id="1_w2twt"]
 [ext_resource type="Script" uid="uid://bukv84ekevtd0" path="res://scenes/book_ui.gd" id="2_7ykc4"]
 [ext_resource type="Script" uid="uid://bd2r17eld5xiw" path="res://scenes/scene_manager.gd" id="2_pu3yx"]
-[ext_resource type="Texture2D" uid="uid://bkh14hqmiupfq" path="res://textures/book.png" id="2_pw63i"]
 [ext_resource type="Script" uid="uid://bwax07b0dmwsq" path="res://scenes/dialogue_system.gd" id="5_gubc5"]
 [ext_resource type="FontFile" uid="uid://csrnj4dsmp135" path="res://fonts/Inter-VariableFont_opsz,wght.ttf" id="6_rt2n2"]
 
@@ -12,7 +11,7 @@ default_base_scale = 0.05
 default_font = ExtResource("6_rt2n2")
 default_font_size = 20
 
-[node name="MainScene" type="Node2D" unique_id=1806352071]
+[node name="MainScene" type="Node" unique_id=1779915322]
 script = ExtResource("1_w2twt")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1167692545]
@@ -20,23 +19,18 @@ script = ExtResource("1_w2twt")
 [node name="SceneManager" type="Node" parent="." unique_id=949153522]
 script = ExtResource("2_pu3yx")
 
-[node name="BookUI" type="Control" parent="." unique_id=1611370005]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1857537079]
+
+[node name="BookUI" type="Control" parent="CanvasLayer" unique_id=1611370005]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_7ykc4")
 
-[node name="Button" type="Button" parent="BookUI" unique_id=581308226]
-layout_mode = 0
-offset_left = 523.0
-offset_top = 274.0
-offset_right = 571.0
-offset_bottom = 322.0
-icon = ExtResource("2_pw63i")
-expand_icon = true
-
-[node name="Book" type="RichTextLabel" parent="BookUI" unique_id=12836560]
+[node name="Book" type="RichTextLabel" parent="CanvasLayer/BookUI" unique_id=12836560]
 visible = false
 layout_mode = 0
 offset_left = -269.0
@@ -44,63 +38,62 @@ offset_top = -321.0
 offset_right = 273.0
 offset_bottom = 321.0
 
-[node name="DialogueSystem" type="Control" parent="." unique_id=1201144036]
+[node name="DialogueSystem" type="Control" parent="CanvasLayer" unique_id=1201144036]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("5_gubc5")
 
-[node name="MainBody" type="RichTextLabel" parent="DialogueSystem" unique_id=2045473398]
-layout_mode = 0
-offset_left = -342.0
-offset_top = 104.00001
-offset_right = -302.0
-offset_bottom = 144.0
-scale = Vector2(20.650002, 3.9299996)
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DialogueSystem" unique_id=1427340896]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Dialogue" type="VBoxContainer" parent="CanvasLayer/DialogueSystem/VBoxContainer" unique_id=899963353]
+layout_mode = 2
+
+[node name="MainBody" type="RichTextLabel" parent="CanvasLayer/DialogueSystem/VBoxContainer/Dialogue" unique_id=2045473398]
+layout_mode = 2
 theme = SubResource("Theme_gubc5")
+text = "Hello"
 fit_content = true
 scroll_active = false
 
-[node name="Skip" type="Button" parent="DialogueSystem" unique_id=2145689743]
-layout_mode = 0
-offset_left = -85.0
-offset_top = 292.0
-offset_right = -44.0
-offset_bottom = 323.0
-text = "Skip"
+[node name="Name" type="RichTextLabel" parent="CanvasLayer/DialogueSystem/VBoxContainer/Dialogue" unique_id=119034032]
+layout_mode = 2
 
-[node name="Auto" type="Button" parent="DialogueSystem" unique_id=1211136127]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 292.0
-offset_right = 85.0
-offset_bottom = 323.0
-text = "Auto"
+[node name="Actions" type="BoxContainer" parent="CanvasLayer/DialogueSystem/VBoxContainer" unique_id=1975873596]
+layout_mode = 2
+alignment = 1
 
-[node name="Name" type="RichTextLabel" parent="DialogueSystem" unique_id=119034032]
-layout_mode = 0
-offset_left = -371.0
-offset_top = 74.0
-offset_right = -331.0
-offset_bottom = 114.0
-scale = Vector2(13.479999, 1)
+[node name="Load" type="Button" parent="CanvasLayer/DialogueSystem/VBoxContainer/Actions" unique_id=419670894]
+layout_mode = 2
+text = "Load"
 
-[node name="Save" type="Button" parent="DialogueSystem" unique_id=246908463]
-layout_mode = 0
-offset_left = 168.0
-offset_top = 292.0
-offset_right = 212.0
-offset_bottom = 323.0
+[node name="Save" type="Button" parent="CanvasLayer/DialogueSystem/VBoxContainer/Actions" unique_id=246908463]
+layout_mode = 2
 text = "Save
 "
 
-[node name="Load" type="Button" parent="DialogueSystem" unique_id=419670894]
-layout_mode = 0
-offset_left = 273.0
-offset_top = 292.0
-offset_right = 319.0
-offset_bottom = 323.0
-text = "Load"
+[node name="Auto" type="Button" parent="CanvasLayer/DialogueSystem/VBoxContainer/Actions" unique_id=1211136127]
+layout_mode = 2
+text = "Auto"
 
-[connection signal="pressed" from="BookUI/Button" to="BookUI" method="_on_button_pressed"]
+[node name="Skip" type="Button" parent="CanvasLayer/DialogueSystem/VBoxContainer/Actions" unique_id=2145689743]
+layout_mode = 2
+text = "Skip"
+
+[node name="BookButton" type="Button" parent="CanvasLayer/DialogueSystem/VBoxContainer/Actions" unique_id=581308226]
+layout_mode = 2
+text = "Book"
+
+[connection signal="pressed" from="CanvasLayer/DialogueSystem/VBoxContainer/Actions/BookButton" to="CanvasLayer/BookUI" method="_on_button_pressed"]
