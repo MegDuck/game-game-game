@@ -8,5 +8,4 @@ func _ready() -> void:
 
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		# Automatically fire the signal to your EventBus
-		GameState.clue_clicked.emit(id)
+		GameState.clicked(id)

@@ -9,8 +9,9 @@ var ChosenClues: Array[String] = []
 # --- SIGNALS ---
 signal clue_clicked(clue_id: String)
 signal display_text(text: String, character_id: String)
-signal scene_switched(scene_id: PackedScene)
+signal scene_switched(scene_id: String)
 signal added_text(text: String)
+signal no_clues()
 
 
 
@@ -19,7 +20,9 @@ signal added_text(text: String)
 # --- METHODS ---
 # вызывается когда игрок кликает на предмет.
 func clicked(clue_id: String) -> void:
+	print('hello')
 	if remaining_clues <= 0:
+		
 		return
 		# текст дела
 
@@ -30,7 +33,12 @@ func clicked(clue_id: String) -> void:
 
 	ChosenClues.append(clue_id)
 	clue_clicked.emit(clue_id)
+	remaining_clues -= 1
+	if remaining_clues == 0:
+		no_clues.emit()
 	print("Clue clicked: ", clue_id, " | Remaining: ", remaining_clues)
+
+
 
 # дисплей диалога
 func display(txt: String, character_id: String) -> void:

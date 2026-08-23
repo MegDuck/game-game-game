@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://c2kkvs62dd7nn"]
+
+[ext_resource type="Script" uid="uid://b28uhhh0ek0by" path="res://plans/room.gd" id="1_mwp2c"]
+[ext_resource type="Script" uid="uid://bm5fr82lteh68" path="res://clue.gd" id="1_sww38"]
+[ext_resource type="Texture2D" uid="uid://2ij3oovja484" path="res://textures/chair.png" id="2_redkr"]
+[ext_resource type="Texture2D" uid="uid://dfh7f6u30fxot" path="res://textures/table.png" id="3_mwp2c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvmnn"]
+size = Vector2(22, 20)
+
+[node name="room" type="Node2D" unique_id=1451255959]
+script = ExtResource("1_mwp2c")
+
+[node name="Chair" type="Area2D" parent="." unique_id=1170467014]
+position = Vector2(28, 0)
+script = ExtResource("1_sww38")
+id = "chair1"
+metadata/_custom_type_script = "uid://bm5fr82lteh68"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chair" unique_id=1760368281]
+position = Vector2(11, 10)
+shape = SubResource("RectangleShape2D_kvmnn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Chair" unique_id=1335878758]
+position = Vector2(11.000001, 10.000001)
+scale = Vector2(0.0859375, 0.07421875)
+texture = ExtResource("2_redkr")
+
+[node name="Chair2" type="Area2D" parent="." unique_id=1040314780]
+position = Vector2(76, 0)
+script = ExtResource("1_sww38")
+id = "chair2"
+metadata/_custom_type_script = "uid://bm5fr82lteh68"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chair2" unique_id=1331544227]
+position = Vector2(11, 10)
+shape = SubResource("RectangleShape2D_kvmnn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Chair2" unique_id=937750230]
+position = Vector2(11.000001, 10.000001)
+scale = Vector2(0.0859375, 0.07421875)
+texture = ExtResource("2_redkr")
+flip_h = true
+
+[node name="Table" type="Area2D" parent="." unique_id=783916318]
+position = Vector2(52, 7)
+script = ExtResource("1_sww38")
+id = "table"
+metadata/_custom_type_script = "uid://bm5fr82lteh68"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Table" unique_id=1477100730]
+position = Vector2(11, 10)
+shape = SubResource("RectangleShape2D_kvmnn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Table" unique_id=2147116836]
+position = Vector2(11.000001, 10.000001)
+scale = Vector2(0.0859375, 0.07421875)
+texture = ExtResource("3_mwp2c")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=743629676]
+offset = Vector2(115, 65)
+enabled = false
+zoom = Vector2(5, 5)
+editor_draw_limits = true

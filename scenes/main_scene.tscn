@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b58dfl4xtb0u" path="res://scenes/main_scene.gd" id="1_w2twt"]
 [ext_resource type="Script" uid="uid://bukv84ekevtd0" path="res://scenes/book_ui.gd" id="2_7ykc4"]
+[ext_resource type="Script" uid="uid://bd2r17eld5xiw" path="res://scenes/scene_manager.gd" id="2_pu3yx"]
 [ext_resource type="Texture2D" uid="uid://bkh14hqmiupfq" path="res://textures/book.png" id="2_pw63i"]
 
 [node name="MainScene" type="Node2D" unique_id=1806352071]
@@ -10,6 +11,7 @@ script = ExtResource("1_w2twt")
 [node name="Camera" type="Camera2D" parent="." unique_id=1167692545]
 
 [node name="SceneManager" type="Node" parent="." unique_id=949153522]
+script = ExtResource("2_pu3yx")
 
 [node name="BookUI" type="Control" parent="." unique_id=1611370005]
 layout_mode = 3
@@ -34,6 +36,5 @@ offset_left = -269.0
 offset_top = -321.0
 offset_right = 273.0
 offset_bottom = 321.0
-text = "Hello1Ric"
 
 [connection signal="pressed" from="BookUI/Button" to="BookUI" method="_on_button_pressed"]
