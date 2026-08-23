@@ -4,6 +4,13 @@
 [ext_resource type="Script" uid="uid://bukv84ekevtd0" path="res://scenes/book_ui.gd" id="2_7ykc4"]
 [ext_resource type="Script" uid="uid://bd2r17eld5xiw" path="res://scenes/scene_manager.gd" id="2_pu3yx"]
 [ext_resource type="Texture2D" uid="uid://bkh14hqmiupfq" path="res://textures/book.png" id="2_pw63i"]
+[ext_resource type="Script" uid="uid://bwax07b0dmwsq" path="res://scenes/dialogue_system.gd" id="5_gubc5"]
+[ext_resource type="FontFile" uid="uid://csrnj4dsmp135" path="res://fonts/Inter-VariableFont_opsz,wght.ttf" id="6_rt2n2"]
+
+[sub_resource type="Theme" id="Theme_gubc5"]
+default_base_scale = 0.05
+default_font = ExtResource("6_rt2n2")
+default_font_size = 20
 
 [node name="MainScene" type="Node2D" unique_id=1806352071]
 script = ExtResource("1_w2twt")
@@ -36,5 +43,64 @@ offset_left = -269.0
 offset_top = -321.0
 offset_right = 273.0
 offset_bottom = 321.0
+
+[node name="DialogueSystem" type="Control" parent="." unique_id=1201144036]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_gubc5")
+
+[node name="MainBody" type="RichTextLabel" parent="DialogueSystem" unique_id=2045473398]
+layout_mode = 0
+offset_left = -342.0
+offset_top = 104.00001
+offset_right = -302.0
+offset_bottom = 144.0
+scale = Vector2(20.650002, 3.9299996)
+theme = SubResource("Theme_gubc5")
+fit_content = true
+scroll_active = false
+
+[node name="Skip" type="Button" parent="DialogueSystem" unique_id=2145689743]
+layout_mode = 0
+offset_left = -85.0
+offset_top = 292.0
+offset_right = -44.0
+offset_bottom = 323.0
+text = "Skip"
+
+[node name="Auto" type="Button" parent="DialogueSystem" unique_id=1211136127]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 292.0
+offset_right = 85.0
+offset_bottom = 323.0
+text = "Auto"
+
+[node name="Name" type="RichTextLabel" parent="DialogueSystem" unique_id=119034032]
+layout_mode = 0
+offset_left = -371.0
+offset_top = 74.0
+offset_right = -331.0
+offset_bottom = 114.0
+scale = Vector2(13.479999, 1)
+
+[node name="Save" type="Button" parent="DialogueSystem" unique_id=246908463]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 292.0
+offset_right = 212.0
+offset_bottom = 323.0
+text = "Save
+"
+
+[node name="Load" type="Button" parent="DialogueSystem" unique_id=419670894]
+layout_mode = 0
+offset_left = 273.0
+offset_top = 292.0
+offset_right = 319.0
+offset_bottom = 323.0
+text = "Load"
 
 [connection signal="pressed" from="BookUI/Button" to="BookUI" method="_on_button_pressed"]

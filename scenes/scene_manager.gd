@@ -12,7 +12,7 @@ var current_plan: Node2D = null
 func _ready():
 	camera = get_node('/root/MainScene/Camera')
 	change_plan("room")
-	GameState.scene_switched.connect(change_plan)
+	GameState._scene_switched.connect(change_plan)
 
 func change_zoom(x, y):
 	camera.zoom = Vector2(x, y)
