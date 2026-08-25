@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d08lwgsapeka4"]
+
+[ext_resource type="Script" uid="uid://b28uhhh0ek0by" path="res://plans/room.gd" id="1_gxt3n"]
+[ext_resource type="Texture2D" uid="uid://0p3ypeymybh" path="res://textures/indoors.png" id="2_e6uo8"]
+[ext_resource type="Script" uid="uid://b36l3khpnxxpd" path="res://plans/camera_2d.gd" id="3_4fia1"]
+
+[node name="room" type="Node2D" unique_id=1451255959]
+script = ExtResource("1_gxt3n")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1407935912]
+texture = ExtResource("2_e6uo8")
+
+[node name="Camera2D" type="Camera2D" parent="Sprite2D" unique_id=743629676 node_paths=PackedStringArray("sprite_to_capture")]
+editor_draw_limits = true
+script = ExtResource("3_4fia1")
+sprite_to_capture = NodePath("..")

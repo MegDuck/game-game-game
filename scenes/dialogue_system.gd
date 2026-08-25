@@ -16,6 +16,7 @@ var auto: bool = false
 var _dialogue_queue: Array = []
 
 func _ready() -> void:
+	print('Dialogue system init')
 	GameState._display_text.connect(_on_display_text)
 	main_body.text = ""
 	main_body.visible_characters = 0
@@ -43,24 +44,19 @@ func _process_queue() -> void:
 
 # Types out a single dialogue event
 func _play_dialogue(text_lines: Array[String], character_id: String) -> void:
-	# Clear the text box for the new dialogue event to prevent infinite duplication
-	main_body.clear()
-	main_body.visible_characters = 0
-	
 	$"VBoxContainer/Dialogue".show()
 	
 	for txt in text_lines:
+		# 1. CLEAR AT THE START OF THE LOOP
+		# clear() empties the text box, and we manually reset the typewriter counter
+		main_body.clear()
+		main_body.visible_characters = 0
+		
 		var formatted_text = txt
 		if character_id != "narrator" and character_id != "":
 			formatted_text = "[" + character_id + "] " + txt
 
-		if main_body.text != "":
-			formatted_text = "\n\n" + formatted_text
-
-		var start_chars: int = main_body.visible_characters
-		if start_chars < 0:
-			start_chars = 0
-
+		# We no longer need to check for "\n\n" because we are clearing the box every time
 		main_body.append_text(formatted_text)
 		
 		# Wait one frame so the RichTextLabel can parse the newly appended text
@@ -69,7 +65,8 @@ func _play_dialogue(text_lines: Array[String], character_id: String) -> void:
 		var parsed := main_body.get_parsed_text()
 		var total := parsed.length()
 
-		var i := start_chars
+		# 2. ALWAYS START AT 0
+		var i := 0 
 		while i < total:
 			i += 1
 			main_body.visible_characters = i
@@ -98,8 +95,8 @@ func _play_dialogue(text_lines: Array[String], character_id: String) -> void:
 			await _wait_for_input()
 		else:
 			_skip_requested = false
-		
-		main_body.clear()
+			
+		# (Removed main_body.text = "" from here)
 	
 	$"VBoxContainer/Dialogue".hide()
 

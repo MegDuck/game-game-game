@@ -1,7 +1,7 @@
 extends Node
 
 @export var plans: Dictionary = {
-	"room": preload("res://plans/Room.tscn"),
+	"room": preload("res://plans/Indoors.tscn"),
 	#"under_table": preload("res://plans/PlanUnderTable.tscn")
 }
 
@@ -9,7 +9,7 @@ var current_plan: Node2D = null
 @onready var camera: Camera2D
 
 func _ready():
-	camera = get_node('/root/MainScene/Camera')
+	#camera = get_node('/root/MainScene/Camera')
 	
 	# Only connect if not already connected
 	if not GameState._scene_switched.is_connected(change_plan):
@@ -18,10 +18,12 @@ func _ready():
 	change_plan("room")
 
 func change_zoom(x, y):
-	camera.zoom = Vector2(x, y)
+	pass
+	#camera.zoom = Vector2(x, y)
 
 func change_offset(x, y):
-	camera.offset = Vector2(x, y)
+	pass
+	#camera.offset = Vector2(x, y)
 
 func change_plan(plan_id: String):
 	# 1. Stop if we are trying to load the exact same plan we are already on
